@@ -56,7 +56,7 @@ public class AuthenticationController : ControllerBase
     /* Validatie process: 
      * door derde partij Azure Active Directory of Auth0: DataBase check!
      * ingevoerde gegevens worden vergeleken met de verwachte waarden.
-     * Als ze overeenkomen geef gebruiker Id en Naam, ander Null.
+     * Als ze overeenkomen geef gebruiker Id en Naam, anders Null.
      */
     private UserData? ValidateCredentials(AuthenticationData data)
     {
