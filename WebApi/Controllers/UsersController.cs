@@ -4,13 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace WebApi.Controllers;
+
 
 [Route("api/[controller]")]
 [ApiController]
 public class UsersController : ControllerBase
 {
+    private readonly IConfiguration _config;
+
+    public UsersController(IConfiguration config)
+    { 
+        _config = config;
+    }
+
     // GET: api/Users
     [HttpGet]
     public IEnumerable<string> Get()
@@ -27,7 +36,7 @@ public class UsersController : ControllerBase
     [HttpGet("{id}", Name = "Get")]
     public string Get(int id)
     {
-        return $"{id + 10}";
+        return _config.GetConnectionString("Default");
     }
 
     // POST: api/Users
