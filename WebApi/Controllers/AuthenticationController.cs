@@ -53,7 +53,7 @@ public class AuthenticationController : ControllerBase
             // conversie van string in Byte Array.
             Encoding.ASCII.GetBytes(
                 // Krijg van instellingen onder Authentication de SecretKey waarde in een string.
-                _config.GetValue<string>("Authentication:SecretKey")));
+                _config.GetValue<string>("Authentication:SecretKey")!));
 
         // een handtekening voor token
         var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
