@@ -51,7 +51,7 @@ public class AuthenticationController : ControllerBase
         // en creert een nieuwe key.
         var secretKey = new SymmetricSecurityKey(
             // conversie van string in Byte Array.
-            Encoding.UTF8.GetBytes(
+            Encoding.ASCII.GetBytes(
                 // Krijg van instellingen onder Authentication de SecretKey waarde in een string.
                 _config.GetValue<string>("Authentication:SecretKey")));
 
