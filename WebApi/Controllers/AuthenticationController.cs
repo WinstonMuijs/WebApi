@@ -68,7 +68,7 @@ public class AuthenticationController : ControllerBase
 
         // token
         var token = new JwtSecurityToken(
-            _config.GetValue<string>("Authentication:Isseur"),
+            _config.GetValue<string>("Authentication:Issuer"),
             _config.GetValue<string>("Authentication:Audience"),
             claims,
             DateTime.UtcNow, // token is geldig van ...nu
