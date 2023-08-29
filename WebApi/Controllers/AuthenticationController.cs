@@ -1,3 +1,5 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -36,7 +38,8 @@ public class AuthenticationController : ControllerBase
         {
             return Unauthorized();
         }
-        
+        var token = GenerateToken(user);
+        return Ok(token);
     }
 
     // Creer token omdat user niet null is.
@@ -51,6 +54,25 @@ public class AuthenticationController : ControllerBase
             Encoding.ASCII.GetBytes(
                 // Krijg van instellingen onder Authentication de SecretKey waarde in een string.
                 _config.GetValue<string>("Authentication: SecretKey")));
+
+        // een handtekening voor token
+        var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+        // claims: datapunten van de gebruiker die we verifieren
+        List<Claim> claims = new();
+            // identificeert de gebruiker met id
+        claims.Add(new(JwtRegisteredClaimNames.Sub, user.UserId.ToString()));
+        claims.Add(new(JwtRegisteredClaimNames.UniqueName, user.UserName));
+
+        // token
+        var token = new JwtSecurityToken(
+            _config.GetValue<string>("Authemtication:Isseur"),
+            _config.GetValue<string>("Authemtication:Audience"),
+            claims,
+            DateTime.UtcNow, // token is geldig van ...nu
+            DateTime.UtcNow.AddMinutes(1), // Wanneer de token ongeldig wordt 
+            signingCredentials); // handtekekning
+        return new JwtSecurityTokenHandler().WriteToken(token);
 
     }
     /* Validatie process: 
