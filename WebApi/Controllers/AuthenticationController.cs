@@ -59,15 +59,17 @@ public class AuthenticationController : ControllerBase
         var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
         // claims: datapunten van de gebruiker die we verifieren
-        List<Claim> claims = new();
+        List<Claim> claims = new()
+        {
             // identificeert de gebruiker met id
-        claims.Add(new(JwtRegisteredClaimNames.Sub, user.UserId.ToString()));
-        claims.Add(new(JwtRegisteredClaimNames.UniqueName, user.UserName));
+            new(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
+            new(JwtRegisteredClaimNames.UniqueName, user.UserName)
+        };
 
         // token
         var token = new JwtSecurityToken(
-            _config.GetValue<string>("Authemtication:Isseur"),
-            _config.GetValue<string>("Authemtication:Audience"),
+            _config.GetValue<string>("Authentication:Isseur"),
+            _config.GetValue<string>("Authentication:Audience"),
             claims,
             DateTime.UtcNow, // token is geldig van ...nu
             DateTime.UtcNow.AddMinutes(1), // Wanneer de token ongeldig wordt 
