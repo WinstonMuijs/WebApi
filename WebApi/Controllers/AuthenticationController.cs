@@ -71,7 +71,7 @@ public class AuthenticationController : ControllerBase
             claims,
             DateTime.UtcNow, // token is geldig van ...nu
             DateTime.UtcNow.AddMinutes(1), // Wanneer de token ongeldig wordt 
-            signingCredentials); // handtekening
+            signingCredentials); // handtekening toevoegen aan token.
         return new JwtSecurityTokenHandler().WriteToken(token);
 
     }
@@ -93,8 +93,8 @@ public class AuthenticationController : ControllerBase
 
         return null;
     }
-    /*Methode of functie over de invoer waarden met de verwachte waarden tevergelijken.
-     * Als ze ovvereenkomen geef true anders false.
+    /*Methode of functie om de invoer waarden met de verwachte waarden tevergelijken.
+     * Als ze overeenkomen geef true anders false.
      */
     private bool CompareValues(string? actual, string expected)
     {
