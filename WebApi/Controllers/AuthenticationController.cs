@@ -71,7 +71,7 @@ public class AuthenticationController : ControllerBase
             claims,
             DateTime.UtcNow, // token is geldig van ...nu
             DateTime.UtcNow.AddMinutes(1), // Wanneer de token ongeldig wordt 
-            signingCredentials); // handtekekning
+            signingCredentials); // handtekening
         return new JwtSecurityTokenHandler().WriteToken(token);
 
     }
