@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,18 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//Authorisatie
+builder.Services.AddAuthorization(opts =>
+{
+    // bouwen van policies
+    opts.AddPolicy("MustHaveStudentId", policy =>
+    {
+        policy.RequireClaim("StudentId");
+    });
+    opts.FallbackPolicy = new AuthorizationPolicyBuilder()
+    .RequireAuthenticatedUser()
+    .Build();
+});
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(opts =>
 {
     opts.TokenValidationParameters = new()

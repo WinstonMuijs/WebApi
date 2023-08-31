@@ -35,7 +35,7 @@ public class UsersController : ControllerBase
 
     // GET: api/Users/5
     [HttpGet("{id}", Name = "Get")]
-    [Authorize]
+    [Authorize(Policy = "MustHaveStudentId")] // Autorisatie: Moet een studentId hebben.
     public string Get(int id)
     {
         return _config.GetConnectionString("Default");

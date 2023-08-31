@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
@@ -31,6 +32,7 @@ public class AuthenticationController : ControllerBase
 
     // api/Authentication/token
     [HttpPost("token")]
+    [AllowAnonymous] // Hierdoor kunnen we een token genereren al zijn alle eindpunten gesloten.
     public ActionResult<string> Authenticate([FromBody] AuthenticationData data)
     {
         var user = ValidateCredentials(data);
