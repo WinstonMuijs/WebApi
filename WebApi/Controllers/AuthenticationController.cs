@@ -28,7 +28,7 @@ public class AuthenticationController : ControllerBase
     */
     public record AuthenticationData(string? UserName, string? Password);
     /* Als Authenticatie data klopt krijg je UserData terug */
-    public record UserData(int UserId, string UserName, string StudentId, string Subject, string MajorStudent, string YearOfClass);
+    public record UserData(int UserId, string UserName, string StudentId, string Subject, string MajorStudent, string YearOfClass, string Title);
 
     // api/Authentication/token
     [HttpPost("token")]
@@ -72,7 +72,8 @@ public class AuthenticationController : ControllerBase
             new("StudentId",user.StudentId),
             new("Subject", user.Subject),
             new("MajorStudent", user.MajorStudent),
-            new("YearOfClass", user.YearOfClass)
+            new("YearOfClass", user.YearOfClass),
+            new("Title", user.Title)
         };
 
         // token
@@ -99,13 +100,13 @@ public class AuthenticationController : ControllerBase
         if(CompareValues(data.UserName, "whmuijs") &&
             CompareValues(data.Password, "Test123"))
         {
-            return new UserData(1, data.UserName!, "E003", "BackEnd", "CT", "2023");
+            return new UserData(1, data.UserName!, "E003", "BackEnd", "CT", "2023", "Master");
         }
 
         if (CompareValues(data.UserName, "sstorm") &&
             CompareValues(data.Password, "Test456"))
         {
-            return new UserData(1, data.UserName!, "E005", "FrontEnd", "CMM", "2024");
+            return new UserData(1, data.UserName!, "E005", "FrontEnd", "CMM", "2024", "Senior");
         }
 
         return null;

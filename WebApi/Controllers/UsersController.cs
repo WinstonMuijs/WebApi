@@ -20,6 +20,7 @@ public class UsersController : ControllerBase
 
     // GET: api/Users
     [HttpGet]
+    [Authorize(Policy = Policies.Title)]
     public IEnumerable<string> Get()
     {
         List<string> output = new();

@@ -21,6 +21,11 @@ builder.Services.AddAuthorization(opts =>
         policy.RequireClaim("StudentId");
     });
 
+    opts.AddPolicy(Policies.Title, policy =>
+    {
+        policy.RequireClaim("Title", "Master");
+    });
+
     opts.AddPolicy(Policies.MajorStudent, policy =>
     {
         policy.RequireClaim("MajorStudent");
