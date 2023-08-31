@@ -28,7 +28,7 @@ public class AuthenticationController : ControllerBase
     */
     public record AuthenticationData(string? UserName, string? Password);
     /* Als Authenticatie data klopt krijg je UserData terug */
-    public record UserData(int UserId, string UserName, string StudentId, string Subject);
+    public record UserData(int UserId, string UserName, string StudentId, string Subject, string MajorStudent, string YearOfClass);
 
     // api/Authentication/token
     [HttpPost("token")]
@@ -70,7 +70,9 @@ public class AuthenticationController : ControllerBase
             new(JwtRegisteredClaimNames.UniqueName, user.UserName),
             // custom claims
             new("StudentId",user.StudentId),
-            new("Subject", user.Subject)
+            new("Subject", user.Subject),
+            new("MajorStudent", user.MajorStudent),
+            new("YearOfClass", user.YearOfClass)
         };
 
         // token
@@ -97,13 +99,13 @@ public class AuthenticationController : ControllerBase
         if(CompareValues(data.UserName, "whmuijs") &&
             CompareValues(data.Password, "Test123"))
         {
-            return new UserData(1, data.UserName!, "E003", "BackEnd");
+            return new UserData(1, data.UserName!, "E003", "BackEnd", "CT", "2023");
         }
 
         if (CompareValues(data.UserName, "sstorm") &&
             CompareValues(data.Password, "Test456"))
         {
-            return new UserData(1, data.UserName!, "E005", "FrontEnd");
+            return new UserData(1, data.UserName!, "E005", "FrontEnd", "CMM", "2024");
         }
 
         return null;

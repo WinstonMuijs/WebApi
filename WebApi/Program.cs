@@ -1,6 +1,8 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using WebApi.Constants;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,10 +16,22 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAuthorization(opts =>
 {
     // bouwen van policies
-    opts.AddPolicy("MustHaveStudentId", policy =>
+    opts.AddPolicy(Policies.MustHaveStudentsId, policy =>
     {
         policy.RequireClaim("StudentId");
     });
+
+    opts.AddPolicy(Policies.MajorStudent, policy =>
+    {
+        policy.RequireClaim("MajorStudent");
+        policy.RequireUserName("whmuijs");
+    });
+
+    opts.AddPolicy(Policies.YearOfClass, policy =>
+    {
+        policy.RequireClaim("YearOfClass");
+    });
+
     opts.FallbackPolicy = new AuthorizationPolicyBuilder()
     .RequireAuthenticatedUser()
     .Build();
