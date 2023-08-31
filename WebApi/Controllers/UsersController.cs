@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +35,7 @@ public class UsersController : ControllerBase
 
     // GET: api/Users/5
     [HttpGet("{id}", Name = "Get")]
+    [Authorize]
     public string Get(int id)
     {
         return _config.GetConnectionString("Default");
